@@ -1,0 +1,15 @@
+    {{$Email := .Email}}
+    <div>
+        <table class="table table-striped table-dark">
+          <tbody>
+    {{range .FileList}}
+
+        <tr>
+            <td> <a class="text-white" href="/download/{{$Email}}/{{.}}">{{.}}</a></td>
+        </tr>
+
+    {{end}}
+
+          </tbody>
+        </table>
+    </div>
