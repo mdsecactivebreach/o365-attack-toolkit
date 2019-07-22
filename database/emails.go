@@ -13,7 +13,7 @@ func GetEmailsByUser(email string) []model.Mail{
 
 
 
-	rows, err := db.Query(model.GetMailsQuery,email)
+	rows, err := db.Query(model.GetUserMailsQuery,email)
 	mail := model.Mail{}
 
 	if err != nil{
