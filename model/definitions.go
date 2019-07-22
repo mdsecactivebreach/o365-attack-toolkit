@@ -53,7 +53,7 @@ var  InsertUserQuery  = "INSERT OR IGNORE INTO users VALUES(?,?,?,?,?,?,?);"
 var GetUsersQuery = "SELECT * FROM users;"
 
 var GetMailsQuery = "SELECT * FROM mails;"
-var GetUserMailsQuery = "SELECT * FROM mails WHERE Mail = ?;"
+var GetUserMailsQuery = "SELECT * FROM mails WHERE User = ?;"
 
 var SearchUserMailsQuery = "SELECT * FROM mails WHERE User = ? and BodyContent LIKE ?;"
 var SearchEmailQuery = "SELECT * FROM mails WHERE BodyContent LIKE ?;"
