@@ -46,7 +46,7 @@ func StartIntServer(config model.Config){
 
 
 	server := &http.Server{
-		Addr:fmt.Sprintf("127.0.0.1:%d", config.Server.InternalPort ),
+		Addr:fmt.Sprintf("%s:%d",config.Server.Host, config.Server.InternalPort ),
 		Handler:route,
 	}
 	server.ListenAndServe()
