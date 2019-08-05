@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+  "strings"
 	"github.com/gorilla/mux"
 	"html/template"
 	"log"
@@ -15,18 +16,16 @@ import (
 // This will contain the template functions
 
 func ExecuteTemplate(w http.ResponseWriter,page model.Page, templatePath string)  {
-
-	tpl,err := template.ParseFiles("templates/main.html",templatePath)
+  tpl := template.New("")
+  tpl.Funcs(template.FuncMap{"StringsJoin": strings.Join})
+  _,err := tpl.ParseFiles("templates/main.html",templatePath)
 	if err != nil{
 		log.Fatal(err)
 	}
-	tpl.ExecuteTemplate(w,"layout",page)
+  tpl.ExecuteTemplate(w,"layout",page)
 }
 
 func ExecuteSingleTemplate(w http.ResponseWriter,page model.Page, templatePath string){
-
-
-
 	tpl,err := template.ParseFiles(templatePath)
 	if err != nil{
 		log.Println(err)
@@ -46,6 +45,12 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	ExecuteTemplate(w,Page,"templates/users.html")
 }
 
+func GetADUsers(w http.ResponseWriter, r *http.Request) {
+	Page := model.Page{}
+	Page.Title = "AD Users"
+	Page.ADUserList = database.GetADUsers();
+	ExecuteTemplate(w,Page,"templates/adusers.html")
+}
 
 func GetUserEmails(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}

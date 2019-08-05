@@ -13,12 +13,13 @@ import (
 func StartIntServer(config model.Config){
 
 
-	log.Printf("Starting Internal Server on 127.0.0.1:%d \n", config.Server.InternalPort )
+	log.Printf("Starting Internal Server on %s:%d \n",config.Server.Host, config.Server.InternalPort )
 
 	route := mux.NewRouter()
 
 	route.HandleFunc("/",GetUsers).Methods("GET")
 	route.HandleFunc(model.IntAbout,GetAbout).Methods("GET")
+	route.HandleFunc("/adusers",GetADUsers).Methods("GET")
 
 	// Routes for Users
 	route.HandleFunc(model.IntGetAll,GetUsers).Methods("GET")
@@ -46,7 +47,7 @@ func StartIntServer(config model.Config){
 
 
 	server := &http.Server{
-		Addr:fmt.Sprintf("%s:%d",config.Server.Host, config.Server.InternalPort ),
+		Addr:fmt.Sprintf("%s:%d", config.Server.Host, config.Server.InternalPort ),
 		Handler:route,
 	}
 	server.ListenAndServe()

@@ -52,6 +52,9 @@ var ApiEndpointRoot = "https://graph.microsoft.com/v1.0"
 var  InsertUserQuery  = "INSERT OR IGNORE INTO users VALUES(?,?,?,?,?,?,?);"
 var GetUsersQuery = "SELECT * FROM users;"
 
+var  InsertADUserQuery  = "INSERT OR IGNORE INTO adusers VALUES(?,?,?,?,?,?,?,?,?);"
+var GetADUsersQuery = "SELECT * FROM adusers;"
+
 var GetMailsQuery = "SELECT * FROM mails;"
 var GetUserMailsQuery = "SELECT * FROM mails WHERE User = ?;"
 

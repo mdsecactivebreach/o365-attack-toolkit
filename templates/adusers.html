@@ -1,0 +1,41 @@
+{{define "content"}}
+
+    {{if .ADUserList}}
+    <h3>{{.Title}}</h3>
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">UPN</th>
+            <th scope="col">Display Name</th>
+            <th scope="col">Given Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Mobile Phone</th>
+            <th scope="col">Business Phones</th>
+            <th scope="col">Preferred Language</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range .ADUserList}}
+        <tr>
+          <th scope="row">{{.ID}}</th>
+            <td>{{.UserPrincipalName}}</td>
+            <td>{{.DisplayName}}</td>
+            <td>{{.GivenName}}</td>
+            <td>{{.Surname}}</td>
+            <td>{{.Mail}}</td>
+            <td>{{.MobilePhone}}</td>
+            <td>{{StringsJoin .BusinessPhones ","}}</td>
+            <td>{{.PreferredLanguage}}</td>
+        </tr>
+        {{end}}
+        </tbody>
+    </table>
+        {{else}}
+        <div class="alert alert-warning show" role="alert">
+           Nothing here :/ - You are a bad pirate !!!!
+        </div>
+        {{end}}
+{{end}}

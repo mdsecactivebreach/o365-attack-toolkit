@@ -32,8 +32,9 @@ type RecentFiles struct {
 	} `json:"value"`
 }
 
-type User struct {
 
+// Used for authenticated users
+type User struct {
 	Id string
 	DisplayName string
 	Mail string
@@ -41,7 +42,35 @@ type User struct {
 	UserPrincipalName string
 	AccessToken string
 	AccessTokenActive int
+}
 
+// Used for retrieved users
+type ADUsers struct {
+	OdataContext string `json:"@odata.context"`
+	OdataNextLink string `json:"@odata.nextLink"`
+	Value        []struct {
+    ID                string   `json:"id"`
+    BusinessPhones    []string `json:"businessPhones"`
+    DisplayName       string   `json:"displayName"`
+    GivenName         string   `json:"givenName"`
+    Mail              string   `json:"mail"`
+    MobilePhone       string   `json:"mobilePhone"`
+    PreferredLanguage string   `json:"preferredLanguage"`
+    Surname           string   `json:"surname"`
+    UserPrincipalName string   `json:"userPrincipalName"`
+	} `json:"value"`
+}
+
+type ADUser struct {
+  ID                string   `json:"id"`
+  BusinessPhones    []string `json:"businessPhones"`
+  DisplayName       string   `json:"displayName"`
+  GivenName         string   `json:"givenName"`
+  Mail              string   `json:"mail"`
+  MobilePhone       string   `json:"mobilePhone"`
+  PreferredLanguage string   `json:"preferredLanguage"`
+  Surname           string   `json:"surname"`
+  UserPrincipalName string   `json:"userPrincipalName"`
 }
 
 type Mail struct{
@@ -136,6 +165,7 @@ type Page struct{
 	Title string
 	Email string
 	UserList []User
+	ADUserList []ADUser
 	EmailList []Mail
 	FileList []string
 	Mail Mail
