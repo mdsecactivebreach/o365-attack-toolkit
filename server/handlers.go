@@ -2,7 +2,6 @@ package server
 
 import (
 	"fmt"
-  "strings"
 	"github.com/gorilla/mux"
 	"html/template"
 	"log"
@@ -11,28 +10,29 @@ import (
 	"o365-attack-toolkit/model"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // This will contain the template functions
 
-func ExecuteTemplate(w http.ResponseWriter,page model.Page, templatePath string)  {
-  tpl := template.New("")
-  tpl.Funcs(template.FuncMap{"StringsJoin": strings.Join})
-  _,err := tpl.ParseFiles("templates/main.html",templatePath)
-	if err != nil{
+func ExecuteTemplate(w http.ResponseWriter, page model.Page, templatePath string) {
+	tpl := template.New("")
+	tpl.Funcs(template.FuncMap{"StringsJoin": strings.Join})
+	_, err := tpl.ParseFiles("templates/main.html", templatePath)
+	if err != nil {
 		log.Fatal(err)
 	}
-  tpl.ExecuteTemplate(w,"layout",page)
+	tpl.ExecuteTemplate(w, "layout", page)
 }
 
-func ExecuteSingleTemplate(w http.ResponseWriter,page model.Page, templatePath string){
-	tpl,err := template.ParseFiles(templatePath)
-	if err != nil{
+func ExecuteSingleTemplate(w http.ResponseWriter, page model.Page, templatePath string) {
+	tpl, err := template.ParseFiles(templatePath)
+	if err != nil {
 		log.Println(err)
 	}
 
-	err = tpl.Execute(w,page)
-	if err != nil{
+	err = tpl.Execute(w, page)
+	if err != nil {
 		log.Println(err)
 	}
 
@@ -41,15 +41,15 @@ func ExecuteSingleTemplate(w http.ResponseWriter,page model.Page, templatePath s
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
 	Page.Title = "Users"
-	Page.UserList = database.GetUsers();
-	ExecuteTemplate(w,Page,"templates/users.html")
+	Page.UserList = database.GetUsers()
+	ExecuteTemplate(w, Page, "templates/users.html")
 }
 
 func GetADUsers(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
 	Page.Title = "AD Users"
-	Page.ADUserList = database.GetADUsers();
-	ExecuteTemplate(w,Page,"templates/adusers.html")
+	Page.ADUserList = database.GetADUsers()
+	ExecuteTemplate(w, Page, "templates/adusers.html")
 }
 
 func GetUserEmails(w http.ResponseWriter, r *http.Request) {
@@ -61,7 +61,7 @@ func GetUserEmails(w http.ResponseWriter, r *http.Request) {
 
 	Page.Email = id
 	Page.EmailList = database.GetEmailsByUser(id)
-	ExecuteTemplate(w,Page,"templates/emails.html")
+	ExecuteTemplate(w, Page, "templates/emails.html")
 }
 
 func GetAllEmails(w http.ResponseWriter, r *http.Request) {
@@ -69,9 +69,8 @@ func GetAllEmails(w http.ResponseWriter, r *http.Request) {
 	Page.Title = "Emails"
 	Page.Email = "all"
 	Page.EmailList = database.GetAllEmails()
-	ExecuteTemplate(w,Page,"templates/emails.html")
+	ExecuteTemplate(w, Page, "templates/emails.html")
 }
-
 
 func SearchUserEmails(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
@@ -79,13 +78,11 @@ func SearchUserEmails(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	user := vars["id"]
 	searchKey := r.FormValue("search")
-	Page.EmailList = database.SearchUserEmails(user,searchKey)
+	Page.EmailList = database.SearchUserEmails(user, searchKey)
 
 	Page.Email = user
-	ExecuteTemplate(w,Page,"templates/emails.html")
-	}
-
-
+	ExecuteTemplate(w, Page, "templates/emails.html")
+}
 
 func SearchEmails(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
@@ -94,9 +91,8 @@ func SearchEmails(w http.ResponseWriter, r *http.Request) {
 	Page.Title = "Search result for " + searchKey
 
 	Page.EmailList = database.SearchEmails(searchKey)
-	ExecuteTemplate(w,Page,"templates/emails.html")
+	ExecuteTemplate(w, Page, "templates/emails.html")
 }
-
 
 func GetUserFiles(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
@@ -105,7 +101,7 @@ func GetUserFiles(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	email := vars["email"]
 
-	folderDir := fmt.Sprintf("./downloads/%s",email)
+	folderDir := fmt.Sprintf("./downloads/%s", email)
 	if _, err := os.Stat(folderDir); err != nil {
 		if os.IsNotExist(err) {
 			// Create the folder
@@ -132,25 +128,23 @@ func GetUserFiles(w http.ResponseWriter, r *http.Request) {
 
 	Page.Email = email
 	Page.FileList = files
-	ExecuteSingleTemplate(w,Page,"templates/files.html")
+	ExecuteSingleTemplate(w, Page, "templates/files.html")
 	//ExecuteTemplate(w,Page,"templates/files.html")
 }
 
-func GetUserFile(){}
+func GetUserFile() {}
 
-
-func GetAbout(w http.ResponseWriter, r *http.Request){
+func GetAbout(w http.ResponseWriter, r *http.Request) {
 	Page := model.Page{}
 	Page.Title = "About"
-	ExecuteTemplate(w,Page,"templates/about.html")
+	ExecuteTemplate(w, Page, "templates/about.html")
 }
 
-
-func GetEmail(w http.ResponseWriter, r *http.Request){
+func GetEmail(w http.ResponseWriter, r *http.Request) {
 
 	var Page model.Page
 	vars := mux.Vars(r)
 	email := vars["id"]
 	Page.Mail = database.GetEmail(email)
-	ExecuteSingleTemplate(w,Page,"templates/email.html")
+	ExecuteSingleTemplate(w, Page, "templates/email.html")
 }
