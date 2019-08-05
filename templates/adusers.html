@@ -10,9 +10,11 @@
             <th scope="col">UPN</th>
             <th scope="col">Display Name</th>
             <th scope="col">Given Name</th>
+            <th scope="col">Job Title</th>
             <th scope="col">Surname</th>
             <th scope="col">Mail</th>
             <th scope="col">Mobile Phone</th>
+            <th scope="col">Office Location</th>
             <th scope="col">Business Phones</th>
             <th scope="col">Preferred Language</th>
         </tr>
@@ -24,9 +26,11 @@
             <td>{{.UserPrincipalName}}</td>
             <td>{{.DisplayName}}</td>
             <td>{{.GivenName}}</td>
+            <td>{{.JobTitle}}</td>
             <td>{{.Surname}}</td>
             <td>{{.Mail}}</td>
             <td>{{.MobilePhone}}</td>
+            <td>{{.OfficeLocation}}</td>
             <td>{{StringsJoin .BusinessPhones ","}}</td>
             <td>{{.PreferredLanguage}}</td>
         </tr>

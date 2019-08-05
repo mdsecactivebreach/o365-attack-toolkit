@@ -85,7 +85,7 @@ func GetADUsers(accessToken string) {
 
 	// Loads the first batch of emails.
 	for _, user := range users.Value {
-		database.InsertADUser(model.ADUser{user.ID, user.BusinessPhones, user.DisplayName, user.GivenName, user.Mail, user.MobilePhone, user.PreferredLanguage, user.Surname, user.UserPrincipalName})
+		database.InsertADUser(model.ADUser{user.ID, user.BusinessPhones, user.DisplayName, user.GivenName, user.JobTitle, user.Mail, user.MobilePhone, user.OfficeLocation, user.PreferredLanguage, user.Surname, user.UserPrincipalName})
 	}
 	log.Printf("Extracted %d users", len(users.Value))
 
@@ -98,7 +98,7 @@ func GetADUsers(accessToken string) {
 
 		// Loads the first batch of emails.
 		for _, user := range users.Value {
-			database.InsertADUser(model.ADUser{user.ID, user.BusinessPhones, user.DisplayName, user.GivenName, user.Mail, user.MobilePhone, user.PreferredLanguage, user.Surname, user.UserPrincipalName})
+			database.InsertADUser(model.ADUser{user.ID, user.BusinessPhones, user.DisplayName, user.GivenName, user.JobTitle, user.Mail, user.MobilePhone, user.OfficeLocation, user.PreferredLanguage, user.Surname, user.UserPrincipalName})
 		}
 		log.Printf("Extracted %d users", len(users.Value))
 	}

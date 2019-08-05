@@ -1,7 +1,5 @@
 package model
 
-
-
 // Public Configuration File
 var GlbConfig Config
 var GlbRules []Rule
@@ -12,14 +10,12 @@ var GlbRules []Rule
 var ExtMainPage = "/"
 var ExtTokenPage = "/token"
 
-
 // Endpoints exposed locally for admins
 
 var IntMainPage = "/"
 var IntGetAll = "/users"
 var IntGetUser = "/user/{id}"
 var IntDelUser = "/user/{id}/del"
-
 
 var IntAllEmails = "/emails"
 var IntSearchEmails = "/emails/search"
@@ -33,6 +29,7 @@ var IntUserNotes = "/user/{id}/notes"
 var IntUserNote = "/user/{id}/note/{note_id}"
 
 var IntAbout = "/about"
+
 // Microsoft Endpoint URLS
 
 var ApiEndpointRoot = "https://graph.microsoft.com/v1.0"
@@ -41,18 +38,16 @@ var ApiEndpointRoot = "https://graph.microsoft.com/v1.0"
 // OneDrive - /drives
 // OneNote - /onenote/notebooks
 
-
 // Queries for the DB
 
 // User Query
 
 //INSERT OR IGNORE INTO my_table VALUES () UPDATE my_table SET x=y WHERE xx=xx This query to be later used to update the access token.
 
-
-var  InsertUserQuery  = "INSERT OR IGNORE INTO users VALUES(?,?,?,?,?,?,?);"
+var InsertUserQuery = "INSERT OR IGNORE INTO users VALUES(?,?,?,?,?,?,?);"
 var GetUsersQuery = "SELECT * FROM users;"
 
-var  InsertADUserQuery  = "INSERT OR IGNORE INTO adusers VALUES(?,?,?,?,?,?,?,?,?);"
+var InsertADUserQuery = "INSERT OR IGNORE INTO adusers VALUES(?,?,?,?,?,?,?,?,?,?,?);"
 var GetADUsersQuery = "SELECT * FROM adusers;"
 
 var GetMailsQuery = "SELECT * FROM mails;"

@@ -3,22 +3,21 @@ package model
 import "time"
 
 type Config struct {
-	Server struct{
-		Host string
+	Server struct {
+		Host         string
 		ExternalPort int
-		Certificate string
-		Key string
+		Certificate  string
+		Key          string
 		InternalPort int
 	}
-	Keywords struct{
-		Outlook string
+	Keywords struct {
+		Outlook  string
 		Onedrive string
-		Onenote string
-
+		Onenote  string
 	}
-	Backdoor struct{
+	Backdoor struct {
 		Enabled bool
-		Macro string
+		Macro   string
 	}
 }
 
@@ -32,58 +31,60 @@ type RecentFiles struct {
 	} `json:"value"`
 }
 
-
 // Used for authenticated users
 type User struct {
-	Id string
-	DisplayName string
-	Mail string
-	JobTitle string
+	Id                string
+	DisplayName       string
+	Mail              string
+	JobTitle          string
 	UserPrincipalName string
-	AccessToken string
+	AccessToken       string
 	AccessTokenActive int
 }
 
 // Used for retrieved users
 type ADUsers struct {
-	OdataContext string `json:"@odata.context"`
+	OdataContext  string `json:"@odata.context"`
 	OdataNextLink string `json:"@odata.nextLink"`
-	Value        []struct {
-    ID                string   `json:"id"`
-    BusinessPhones    []string `json:"businessPhones"`
-    DisplayName       string   `json:"displayName"`
-    GivenName         string   `json:"givenName"`
-    Mail              string   `json:"mail"`
-    MobilePhone       string   `json:"mobilePhone"`
-    PreferredLanguage string   `json:"preferredLanguage"`
-    Surname           string   `json:"surname"`
-    UserPrincipalName string   `json:"userPrincipalName"`
+	Value         []struct {
+		ID                string   `json:"id"`
+		BusinessPhones    []string `json:"businessPhones"`
+		DisplayName       string   `json:"displayName"`
+		GivenName         string   `json:"givenName"`
+		JobTitle          string   `json:"jobTitle"`
+		Mail              string   `json:"mail"`
+		MobilePhone       string   `json:"mobilePhone"`
+		OfficeLocation    string   `json:"officeLocation"`
+		PreferredLanguage string   `json:"preferredLanguage"`
+		Surname           string   `json:"surname"`
+		UserPrincipalName string   `json:"userPrincipalName"`
 	} `json:"value"`
 }
 
 type ADUser struct {
-  ID                string   `json:"id"`
-  BusinessPhones    []string `json:"businessPhones"`
-  DisplayName       string   `json:"displayName"`
-  GivenName         string   `json:"givenName"`
-  Mail              string   `json:"mail"`
-  MobilePhone       string   `json:"mobilePhone"`
-  PreferredLanguage string   `json:"preferredLanguage"`
-  Surname           string   `json:"surname"`
-  UserPrincipalName string   `json:"userPrincipalName"`
+	ID                string   `json:"id"`
+	BusinessPhones    []string `json:"businessPhones"`
+	DisplayName       string   `json:"displayName"`
+	GivenName         string   `json:"givenName"`
+	JobTitle          string   `json:"jobTitle"`
+	Mail              string   `json:"mail"`
+	MobilePhone       string   `json:"mobilePhone"`
+	OfficeLocation    string   `json:"officeLocation"`
+	PreferredLanguage string   `json:"preferredLanguage"`
+	Surname           string   `json:"surname"`
+	UserPrincipalName string   `json:"userPrincipalName"`
 }
 
-type Mail struct{
-	Id string
-	User string
-	Subject string
-	SenderEmail string
-	SenderName string
+type Mail struct {
+	Id             string
+	User           string
+	Subject        string
+	SenderEmail    string
+	SenderName     string
 	HasAttachments bool
-	BodyPreview string
-	BodyType string
-	BodyContent string
-
+	BodyPreview    string
+	BodyType       string
+	BodyContent    string
 }
 
 type Rule struct {
@@ -104,11 +105,10 @@ type Rule struct {
 	} `json:"actions"`
 }
 
-
 type Messages struct {
-	OdataContext string `json:"@odata.context"`
+	OdataContext  string `json:"@odata.context"`
 	OdataNextLink string `json:"@odata.nextLink"`
-	Value        []struct {
+	Value         []struct {
 		OdataEtag                  string        `json:"@odata.etag"`
 		ID                         string        `json:"id"`
 		CreatedDateTime            time.Time     `json:"createdDateTime"`
@@ -161,14 +161,14 @@ type Messages struct {
 	} `json:"value"`
 }
 
-type Page struct{
-	Title string
-	Email string
-	UserList []User
+type Page struct {
+	Title      string
+	Email      string
+	UserList   []User
 	ADUserList []ADUser
-	EmailList []Mail
-	FileList []string
-	Mail Mail
+	EmailList  []Mail
+	FileList   []string
+	Mail       Mail
 }
 
 type Rules struct {

@@ -20,7 +20,7 @@ func GetADUsers() []model.ADUser {
 	}
 	for rows.Next() {
 		var phones string
-		err := rows.Scan(&user.ID, &phones, &user.DisplayName, &user.GivenName, &user.Mail, &user.MobilePhone, &user.PreferredLanguage, &user.Surname, &user.UserPrincipalName)
+		err := rows.Scan(&user.ID, &phones, &user.DisplayName, &user.GivenName, &user.JobTitle, &user.Mail, &user.MobilePhone, &user.OfficeLocation, &user.PreferredLanguage, &user.Surname, &user.UserPrincipalName)
 		user.BusinessPhones = strings.Split(phones, ",")
 		if err != nil {
 			log.Fatal(err)
@@ -39,7 +39,7 @@ func InsertADUser(user model.ADUser) {
 	if err_stmt != nil {
 		log.Fatal(err_stmt)
 	}
-	_, err := stmt.Exec(user.ID, strings.Join(user.BusinessPhones, ","), user.DisplayName, user.GivenName, user.Mail, user.MobilePhone, user.PreferredLanguage, user.Surname, user.UserPrincipalName)
+	_, err := stmt.Exec(user.ID, strings.Join(user.BusinessPhones, ","), user.DisplayName, user.GivenName, user.JobTitle, user.Mail, user.MobilePhone, user.OfficeLocation, user.PreferredLanguage, user.Surname, user.UserPrincipalName)
 	tx.Commit()
 	if err != nil {
 		log.Printf("ERROR: %s", err)
