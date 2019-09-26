@@ -171,8 +171,8 @@ func DownloadFile(url string, fileName string,username string){
 	folderDir := fmt.Sprintf("./downloads/%s",username)
 	if _, err := os.Stat(folderDir); err != nil {
 		if os.IsNotExist(err) {
-			// Create the folder
-			os.Mkdir(folderDir,os.ModePerm)
+			// Make all subsequently folders too 
+			os.MkdirAll(folderDir,os.ModePerm)
 		}else{
 			log.Println(err)
 		}
