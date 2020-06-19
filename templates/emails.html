@@ -1,0 +1,82 @@
+{{define "content"}}
+    {{if .EmailList}}
+        {{if .Email}}
+    <h3 class="float-left">Emails for {{.Email}}</h3>
+        {{else}}
+            <h3 class="float-left">{{.Title}}</h3>
+            {{end}}
+    <form class="form-inline float-right align" method="post">
+        <input class="form-control mr-sm-2" id="search" name="search" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <div>
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Subject</th>
+            <th scope="col">Sender</th>
+            <th scope="col">Body Preview</th>
+            <th scope="col">
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {{range .EmailList}}
+        <tr>
+            <td scope="row">{{.Subject}}</td>
+            <td>{{.SenderName}}</td>
+            <td>
+                <p> {{.BodyPreview}}</p>
+            </td>
+            <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#mailModal" data-id="{{.Id}}">View Email</button></td>
+        </tr>
+
+            {{end}}
+        </tbody>
+    </table>
+        </div>
+        {{else}}
+        <div class="alert alert-warning show" role="alert">
+            No e-mails found...
+        </div>
+
+            {{end}}
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade"   id="mailModal" tabindex="-1" role="dialog" aria-labelledby="mailModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mailModalTitle">Content</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                        ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $('#mailModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var modal = $(this);
+        $.get( "/user/email/"+id, function( data ) {
+            modal.find('.modal-body').html(data);
+        });
+    });
+</script>
+{{end}}

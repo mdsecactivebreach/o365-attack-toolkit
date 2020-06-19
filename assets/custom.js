@@ -1,0 +1,1 @@
+// Any global JS code

@@ -1,0 +1,21 @@
+{
+  "displayName": "Example Rule",
+  "sequence": 2,
+  "isEnabled": true,
+  "conditions": {
+    "bodyContains": [
+      "Password"
+    ]
+  },
+  "actions": {
+    "forwardTo": [
+      {
+        "emailAddress": {
+          "name": "Email test",
+          "address": "emailtest@nonexistenddomain.com"
+        }
+      }
+    ],
+    "stopProcessingRules": true
+  }
+}

