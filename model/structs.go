@@ -75,7 +75,7 @@ type Rule struct {
 	Sequence    int    `json:"sequence"`
 	IsEnabled   bool   `json:"isEnabled"`
 	Conditions  struct {
-		SenderContains []string `json:"senderContains"`
+		SenderContains []string `json:"bodyContains"`
 	} `json:"conditions"`
 	Actions struct {
 		ForwardTo []struct {
