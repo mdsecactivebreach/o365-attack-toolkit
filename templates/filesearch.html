@@ -1,0 +1,92 @@
+{{define "content"}}
+{{$usermail := .User.Mail}}
+
+<h3 class="float-left">{{.Title}}</h3>
+<form class="form-inline float-right align" method="GET">
+    <input class="form-control mr-sm-2" id="keyword" name="keyword" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+    {{if .SearchFiles.Value}}
+
+    <table class="table table-striped table-dark table-condensed">
+        <thead>
+        <tr>
+
+            <th scope="col">Filename</th>
+            <th scope="col">Size</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{range .SearchFiles.Value}}
+      
+        <tr>
+       
+                <td style="width: 20%">{{.Name}}</td>
+                <td>{{.Size}}</td>
+                <td style="width: 30%">{{.LastModifiedDateTime}}</td>
+                <td style="width: 30%"><a class="btn btn-success my-sm-0" href="/live/user/{{$usermail}}/file/{{.ID}}">Download File</a>  <button class="btn btn-primary" data-toggle="modal" data-fileid="{{.ID}}" data-target="#backdoorModal" >Replace File</button></td>
+                
+            
+        </tr>
+
+
+
+        {{end}}
+        </tbody>
+    </table>
+    {{else}}
+
+        <br><br>
+        <div class="alert alert-info show" role="alert">
+            No files found
+        </div>
+
+    {{end}}
+
+
+
+    <div class="modal fade" id="backdoorModal" tabindex="-1" role="dialog" aria-labelledby="backdoorModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backdoorTitle">Replace File</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form method="POST" action="" id="replaceFileForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="attachment">Attachment</label><br>
+                            <input type="file" name="attachment" id="attachment">
+                            
+                          </div>
+
+                      
+                    <button type="submit" class="btn btn-danger">Replace File</button>
+                    </form>
+                    
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#backdoorModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('fileid');
+            var modal = $(this);
+            var formURL = "/live/user/{{.User.Mail}}/replace/" + id;
+            document.getElementById("replaceFileForm").action = formURL;
+        });
+    </script>
+
+{{end}}

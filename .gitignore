@@ -1,0 +1,7 @@
+.idea/
+.DS_Store
+.devcontainer/
+downloads/*.*
+*.exe
+vendor/
+*pwn*.db

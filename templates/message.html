@@ -1,0 +1,14 @@
+{{define "content"}}
+
+{{if .Success}}
+<div class="alert alert-success" role="alert">
+    {{.Message}}
+  </div>
+{{else}}
+<div class="alert alert-danger" role="alert">
+    {{.Message}}
+  </div>
+{{end}}
+
+
+{{end}}
