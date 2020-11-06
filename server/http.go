@@ -16,7 +16,7 @@ func StartIntServer(config model.Config) {
 	// Start the update token function
 	go api.RecursiveTokenUpdate()
 
-	log.Printf("Starting Internal Server on 127.0.0.1:%d \n", config.Server.InternalPort)
+	log.Printf("Starting Internal Server on %s:%d \n", config.Server.Host, config.Server.InternalPort)
 
 	route := mux.NewRouter()
 
