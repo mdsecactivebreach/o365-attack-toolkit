@@ -87,7 +87,7 @@ Update the client secret on the configuration file.
 
 ## Management Interface
 
-The management interface allows the operator to browse the data that  has been extracted. 
+The management interface allows the operator to interact with the compromised users. 
 
 ### Users View
 
